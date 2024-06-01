@@ -1,0 +1,577 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  html {
+    font-size: 62.5%;
+  }
+  *:not(i) {
+    font-family: "Poppins", sans-serif;
+  }
+  body
+  {
+    /* background-image: url(images/background.png);
+    background-size: cover; */
+     background-color: #d1d5ee;
+     /* background-image: linear-gradient(54deg, #9164ff, #8bfff4); */
+
+
+  }
+  .main_content
+  {
+    /* background-color: #5a5f9e; */
+    background-image: linear-gradient(54deg, #9164ff, #8bfff4);
+  }
+  .container
+  {
+    height: 100vh;
+    width:100%;
+    /* background-image: url(images/background.png); */
+    /* background-position: center; */
+    background-size: cover;
+    /* padding-left: 5%; */
+    /* padding-right: 5%; */
+    /* padding-right: 244%; */
+    box-sizing: border-box;
+    position: relative;
+  }
+  header {
+    /* background-image: url(images/background.png); */
+    background-image: linear-gradient(54deg, #9164ff, #8bfff4);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    /* background-color: #98a6b3; */
+    padding: 2.2rem 5rem;
+  }
+  nav {
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: space-around;
+    align-items: center;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+  nav a {
+    font-size: 2.4rem;
+    text-decoration: none;
+  }
+  nav a#logo {
+    /* color: #000000; */
+    color: #055694;
+    font-weight: 700;
+    font-family: 'Poppins';
+    letter-spacing: 1px;
+    font-size: 31px;
+  }
+  nav ul a {
+    color: #2c4168;
+    /* transition: all 0.4s ease; */
+    font-size: 25px;
+    font-weight: 600;
+  }
+  nav ul a:hover {
+    border-bottom: 2px solid #ffffff;
+  }
+  section#home {
+    height: 100vh;
+    display: inline-flex;
+    place-items: center;
+    margin-left: 200px;
+  }
+  h1 {
+    font-size: 4rem;
+  }
+  #ham-menu {
+    display: none;
+    cursor: pointer;
+  }
+  nav ul.active {
+    left: 0;
+  }
+  @media only screen and (max-width: 991px) {
+    html {
+      font-size: 56.25%;
+      color: blueviolet;
+    }
+    header {
+      padding: 2.2rem 5rem;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    html {
+      font-size: 50%;
+      color: rgb(43, 226, 113);
+
+    }
+    #ham-menu {
+      display: block;
+      color: #ffffff;
+    }
+    /* #logo
+    {
+      font-family: 'Poppins';
+    letter-spacing: 1px;
+    font-size: 31px;
+    } */
+
+    /* nav a#logo, */
+    #ham-menu {
+      font-size: 3.2rem;
+    }
+    
+    nav ul {
+      background-color: #d8f4fffa;
+      position: fixed;
+      left: -100vw;
+      top: 73.6px;
+      width: 100vw;
+      height: calc(100vh - 73.6px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      transition: 1s;
+      gap: 0;
+    }
+  }
+  @media only screen and (max-width: 575px) {
+    html {
+      font-size: 46.87%;
+      color: brown;
+    }
+    header {
+      padding: 2rem 3rem;
+    }
+    nav ul {
+      top: 65.18px;
+      height: calc(100vh - 65.18px);
+    }
+  }
+  #signup_btn
+  {
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 22px;
+    font-size: 18px;
+    margin-top: 5px;
+    color: white;
+    /* background-color: #5e6495; */
+    background-color: rgb(16, 41, 87);;
+    transition: all 0.4s ease;
+
+  }
+  #signup_btn:hover
+  {
+    color:#2c4168 ;
+    background-color: #f2faff;
+  }
+
+  
+  .nav_a
+  {
+    padding: 5px;
+    margin-top: 8px;
+
+  }
+ .home
+ {
+  display: flex;
+  justify-content:space-around ;
+ }
+ .home img
+ {
+  width:50%;
+  margin-top: 101px;
+  margin-left: -140px;
+ }
+ .home .homeText
+ {
+  margin-top: 180px;
+  margin-left: 44px;
+ }
+ .homeText h3
+ {
+  margin-top: 22px;
+  font-size: 22px;
+  /* color: #5a5f9e; */
+  color: #42467a;
+ }
+ .homeText h1{
+  font-size:46px ;
+  color: rgb(7 28 68);
+ }
+ .homeText button
+ {
+  margin-top: 22px;
+  font-size: 22px;
+  width: 355px;
+  height: 46px;
+  /* background-color: #5e6495; */
+  background-color: #102957;
+  color: aliceblue;
+  border: none;
+  border-radius: 23px;
+  border: 2px solid ;
+  padding: 0;
+  transition: all 0.4s ease;
+
+ }
+ .homeText button:hover{
+  border: 2px solid rgb(5, 49, 61);
+  background-color: transparent;
+  color: rgb(5, 49, 61);
+
+ }
+
+ @media only screen and (max-width: 991px)
+{
+  .home
+  {
+    justify-content: space-between;
+    margin-top: 23px;
+
+  }
+  .home img
+  {
+    width: 51%;
+    margin-top: 100px;
+    margin-left: 36px;
+  }
+  .home .homeText 
+  {
+    margin-top: 150px;
+    margin-left: 30px;
+  }
+  #signup_btn {
+    padding-left: 15px;
+    padding-right: 22px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 18px;
+    font-size: 15px;
+    margin-top: 13px;
+  }
+  nav a#logo {
+   
+    font-size: 29px;
+    margin-left: -22px;
+    margin-right: 22px;
+    margin-top: 9px;
+
+  }
+  .nav_a {
+    padding: 5px;
+    margin-top: 10px;
+  }
+
+}
+@media only screen and (max-width: 767px)
+{
+  .home img 
+  {
+    justify-content: space-between;
+    width: 431px;
+    height: 400px;
+    margin-top: 90px;
+    margin-left: -98px;
+  }
+  nav {
+    
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 73px;
+  }
+  home .homeText {
+    margin-top: 150px;
+    margin-left: 12px;
+  }
+
+}  
+@media only screen and (max-width: 575px)
+{
+  .home .homeText
+  {
+    margin-top: 130px;
+    margin-left: 6px;
+  }
+  .home img 
+  {
+    justify-content: space-between;
+    
+    width: 455px;
+    height: 400px;
+    margin-top: -84px;
+    margin-left: 18px;
+  }
+  .homeText button
+  {
+    margin-top: 29px;
+    font-size: 20px;
+    width: 131px;
+    height: 40px;
+  }
+  .home {
+    display: inline;
+  }
+}
+.head
+{
+  text-align: center;
+  padding: 95px;
+}
+.head h2{
+  font-size: 50px;
+  color: rgb(5, 49, 61);
+  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+}
+.head span{
+  /* color: #eaeadd; */
+  color: rgb(255 255 255);
+}
+
+.ourProgram
+{
+  display:flex ;
+  justify-content: center; 
+}
+.ourProgram .crd
+{
+ width: 341px;
+ height: 450px;
+ margin-inline: 23px;
+ /* background-color: #c0c6dd; */
+ background-color: rgb(203 214 255);
+ /* padding: 11px; */
+ text-align: center;
+ margin-bottom: 100px;
+ border-radius: 18px;
+}
+.crd h3
+{
+  font-size: 25px;
+  /* color: rgb(5, 49, 61); */
+  color: #061c45;
+}
+.crd p
+{
+  font-size: 15px;
+}
+
+.crd img
+{
+    width: 100%;
+    border-radius: 18px;
+}
+.crd p{
+  margin-top: 22px;
+}
+.crdText
+{
+  margin-top: 11px;
+  margin-left: 6px;
+  
+}
+.crdText button
+{
+  text-align:center ;
+  width: 118px;
+  padding: 11px;
+  color: white;
+  /* background-color: #5e6495; */
+  background-color: #1a3462;
+  position: absolute;
+  margin-top: 22px;
+  cursor: pointer;
+  margin-left: -55px;
+  border-radius: 25px;
+  transition: background-color 0.4s ease;
+
+}
+
+#btn-3
+{
+  margin-top: 48px;
+}
+.crdText button a{
+  text-decoration: none;
+  /* color:rgb(5, 49, 61) ; */
+
+  color: white;
+}
+
+
+.crdText button:hover
+{
+  color: rgb(26, 9, 9);
+  /* background-color: #eaeadd; */
+  background-color: #383f90bf;
+ 
+}
+
+img.icon {
+            width: 25px; /* Adjust as needed */
+            height: 25px; /* Adjust as needed */
+        }
+/*--------------------------------------------workoutPlan--------------------------------------------------- */
+/* .workplan_body
+{
+  background-color: #d1d5ee;
+} */
+.workout_container
+{
+  width: 100%;
+  height: 100vh;
+  padding: 2.8rem 5rem;
+}
+.main2 {
+  width: 70%;
+  margin: auto;
+  padding: 20px;
+  background-color: #848db2a8;
+  text-align: center;
+  margin-top: 50px;
+  box-shadow: 2px 3px 13px 6px rgb(113 111 136 / 86%);
+  border-radius: 13px;
+}
+.main2 h1{
+  color: #061c45;
+  /* text-decoration: underline; */
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+ .work_form, button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.work_btn
+{
+  width: auto;
+  margin: 10px 10px;
+  transition: all 0.4s ease;
+
+}
+.work_btn:hover
+{
+  background-color: #f0eef7;
+  color: #1a3462;
+  border:1px #061c45 solid;
+
+}
+
+button {
+  background-color: #5e6495;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5e6495;
+}
+
+#workout-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#workout-list {
+  list-style-type: none;
+  padding: 0;
+} 
+
+#feedback-message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  display: none;
+}
+
+.success {
+  background-color: #28a745;
+}
+.success1
+{
+  background-color: #e67b17;
+}
+
+.error {
+  background-color: #dc3545;
+}
+#workout-history {
+  margin-top: 10px;
+  text-align: center;
+}
+#workout-history ul {
+  padding: 0;
+  background-color: #d1d5ee;
+  margin-top: 5px;
+  /* border: 3px #251a46b0 solid; */
+  
+}
+#workout-history h2{
+  font-size: 27px;
+  color: #061c45;
+  /* border: 3px #251a46b0 solid; */
+  text-decoration: underline;
+}
+#workout-history li {
+  list-style-type: none;
+  text-align: center;
+  border: 3px #251a46b0 solid;
+  margin-top: 2px;
+  font-size: 17px;
+  /* padding-left: 7px; */
+}
+
+/* #workout-form .work_btn {
+  float: right;
+} */
+
+#workout-history li button {
+  /* float: left; Align the delete and edit buttons to the left */
+  margin-right: -12px; /*Add some space between buttons */
+  width: 110px; /* Set the width of the delete and edit buttons */
+  margin-left: 15px;
+  transition: all 0.4s ease;
+
+}
+
+#workout-history li button:hover
+{
+  background-color: #f2faff;
+  color: #1a3462;
+  border:1px #061c45 solid;
+}
+/*--------------------------------------------workoutPlan--------------------------------------------------- */
+
+
+
+
+/*--------------------------------------------Goal Tracking --------------------------------------------------- */
+
+
+/*--------------------------------------------Goal Tracking --------------------------------------------------- */
+
+/*--------------------------------------------Footer start --------------------------------------------------- */
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}
+/*--------------------------------------------Footer end --------------------------------------------------- */

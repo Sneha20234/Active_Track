@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <a href="index.html">Back to Home Page</a>
+    <title>BMI tracker </title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e7e8ee;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header, footer {
+            background-color: #242b48;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        header h1, footer p {
+            font-size: 1.5rem;
+        }
+
+        main {
+            padding: 20px 0;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #38416e;
+            color: white;
+            padding: 12px 0;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9bb4d2;
+            color: rgb(5, 49, 61);
+        }
+
+        .result {
+            text-align: center;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            color: #333;
+        }
+
+        footer {
+            margin-top: 20px;
+        }
+
+        /* Recommendations Section Styles */
+        .recommendations {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendations h3 {
+            margin-bottom: 10px;
+        }
+
+        .calculator {
+            display: none;
+        }
+
+        .calculator.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Fitness Goal Tracker</h1>
+    </div>
+</header>
+<main>
+    <section id="userInputSection">
+        <div class="container">
+            <h2>Set Your Goal</h2>
+            <form id="goalForm">
+                <label for="goalType">Select Goal:</label>
+                <select id="goalType">
+                    <option value="" disabled selected>Select your goal</option>
+                    <option value="loss">Weight Loss</option>
+                    <option value="gain">Weight Gain</option>
+                    <option value="bmi">BMI</option>
+                </select>
+                <div id="inputFields" style="display: none;">
+                    <label for="currentWeight">Current Weight (kg):</label>
+                    <input type="number" id="currentWeight" placeholder="Enter current weight" required>
+                    <label for="goalWeight">Target Weight (kg):</label>
+                    <input type="number" id="goalWeight" placeholder="Enter goal weight" required>
+                    <label for="timeInterval">Time Interval (weeks):</label>
+                    <input type="number" id="timeInterval" placeholder="Enter time interval" required>
+                </div>
+                <div id="bmiCalculator" class="calculator">
+                    <h3>BMI Calculator</h3>
+                    <label for="height">Height (cm):</label>
+                    <input type="number" id="height" placeholder="Enter height" required>
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" placeholder="Enter weight" required>
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" placeholder="Enter age" required>
+                    <label for="gender">Gender:</label>
+                    <select id="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <button type="button" id="calculateBMIButton">Calculate BMI</button>
+                </div>
+                <button type="button" id="calculateButton">Calculate</button>
+            </form>
+            <div id="result" class="result"></div>
+        </div>
+    </section>
+    <section id="recommendationsSection">
+        <div class="container">
+            <h2>Personalized Recommendations</h2>
+            <div id="workoutRecommendations" class="recommendations"></div>
+            <div id="nutritionRecommendations" class="recommendations"></div>
+            <div id="lifestyleChanges" class="recommendations"></div>
+        </div>
+    </section>
+</main>
+<footer>
+          <div id="copy_right">
+              <p id="copy">
+                  Copyright <span>&copy;</span> 2023 by Snehalata Das. Made with <span>&hearts;</span>.
+              </p>
+          </div>
+      </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const goalTypeSelect = document.getElementById('goalType');
+        const calculateButton = document.getElementById('calculateButton');
+        const bmiCalculator = document.getElementById('bmiCalculator');
+        const calculateBMIButton = document.getElementById('calculateBMIButton');
+
+        goalTypeSelect.addEventListener('change', toggleInputFields);
+        calculateButton.addEventListener('click', calculate);
+        calculateBMIButton.addEventListener('click', calculateBMI);
+    });
+
+    function toggleInputFields() {
+        const goalType = document.getElementById('goalType').value;
+        const inputFields = document.getElementById('inputFields');
+        const bmiCalculator = document.getElementById('bmiCalculator');
+
+        if (goalType === 'loss' || goalType === 'gain') {
+            inputFields.style.display = 'block';
+            bmiCalculator.classList.remove('show');
+            calculateButton.style.display = 'block';
+
+        } else if (goalType === 'bmi') {
+            inputFields.style.display = 'none';
+            bmiCalculator.classList.add('show');
+            calculateButton.style.display = 'none';
+
+        } else {
+            inputFields.style.display = 'none';
+            bmiCalculator.classList.remove('show');
+        }
+    }
+
+
+    function calculate() {
+        const goalType = document.getElementById('goalType').value;
+        if (goalType === 'loss' || goalType === 'gain') {
+            const currentWeight = parseFloat(document.getElementById('currentWeight').value);
+           
+            const goalWeight = parseFloat(document.getElementById('goalWeight').value);
+            const timeInterval = parseFloat(document.getElementById('timeInterval').value);
+
+            if (isNaN(currentWeight) || isNaN(goalWeight) || isNaN(timeInterval)) {
+                displayErrorMessage("Please fill in all fields.");
+                return;
+            }
+
+            if ((goalType === 'loss' && currentWeight <= goalWeight) || (goalType === 'gain' && currentWeight >= goalWeight)) {
+                displayErrorMessage(`Error: Goal weight should be ${goalType === 'loss' ? 'less' : 'greater'} than current weight for ${goalType === 'loss' ? 'weight loss' : 'weight gain'}.`);
+                return;
+            }
+
+            const calorieIntake = calculateCalorieIntake(goalType, currentWeight, goalWeight, timeInterval);
+            displayResult(calorieIntake);
+            displayRecommendations(goalType, currentWeight, goalWeight);
+
+            
+        }
+    }
+
+    function calculateBMI() {
+        const height = parseFloat(document.getElementById('height').value) / 100; // Convert height to meters
+        const weight = parseFloat(document.getElementById('weight').value);
+        const age = parseFloat(document.getElementById('age').value);
+        const gender = document.getElementById('gender').value;
+
+        if (isNaN(height) || isNaN(weight) || isNaN(age)) {
+            displayErrorMessage("Please fill in all fields.");
+            return;
+        }
+
+        const bmi = calculateBMIScore(weight, height);
+        displayBMIResult(bmi, gender);
+        displayRecommendations('bmi', null, null, bmi);
+    }
+
+    function calculateBMIScore(weight, height) {
+        return weight / (height * height);
+    }
+
+    function displayBMIResult(bmi, gender) {
+        let interpretation = '';
+        if (gender === 'male') {
+            if (bmi < 20.7) {
+                interpretation = 'Underweight';
+            } else if (bmi >= 20.7 && bmi <= 26.4) {
+                interpretation = 'Normal weight';
+            } else if (bmi > 26.4 && bmi <= 27.8) {
+                interpretation = 'Marginally overweight';
+            } else if (bmi > 27.8 && bmi <= 31.1) {
+                interpretation = 'Overweight';
+            } else {
+                interpretation = 'Obese';
+            }
+        } else {
+            if (bmi < 19.1) {
+                interpretation = 'Underweight';
+            } else if (bmi >= 19.1 && bmi <= 25.8) {
+                interpretation = 'Normal weight';
+            } else if (bmi > 25.8 && bmi <= 27.3) {
+                interpretation = 'Marginally overweight';
+            } else if (bmi > 27.3 && bmi <= 32.2) {
+                interpretation = 'Overweight';
+            } else {
+                interpretation = 'Obese';
+            }
+        }
+
+        const resultElement = document.getElementById('result');
+        resultElement.style.display = 'block';
+        resultElement.classList.remove('error');
+        resultElement.innerHTML = `Your BMI: ${bmi.toFixed(2)} (${interpretation})`;
+    }
+
+    // Other functions remain the same...
+    function calculateCalorieIntake(goalType, currentWeight, goalWeight, timeInterval) {
+        // Assuming a realistic weight change of 0.5 kg per week
+        const weightChangePerWeek = goalType === 'loss' ? -0.5 : 0.5;
+        const totalWeightChange = (goalWeight - currentWeight);
+        const totalWeeks = timeInterval;
+        const totalCalories = totalWeightChange * 1500 * (1 / weightChangePerWeek); // 7700 calories per kg
+        const calorieIntakePerWeek = totalCalories / totalWeeks;
+        return Math.round(calorieIntakePerWeek);
+    }
+
+    function displayResult(calorieIntake) {
+        const resultElement = document.getElementById('result');
+        resultElement.style.display = 'block';
+        resultElement.classList.remove('error');
+        resultElement.innerHTML = `To achieve your goal, you need to ${calorieIntake > 0 ? 'consume' : 'burn'} approximately ${Math.abs(calorieIntake)} calories per day.`;
+        // resultElement.innerHTML = `you need to eat less than ${calorieIntake > 0 ? 'consume' : 'burn'} approximately ${Math.abs(calorieIntake)} calories everyday, and You have to burn more than xyz calories everyday.`;
+
+    }
+
+    function displayErrorMessage(message) {
+        const resultElement = document.getElementById('result');
+        resultElement.style.display = 'block';
+        resultElement.classList.add('error');
+        resultElement.innerHTML = message;
+    }
+
+   
+function displayRecommendations(goalType, currentWeight, goalWeight, bmi) {
+    // Generate workout recommendation
+    let workoutRecommendation = '';
+    let nutritionRecommendation = '';
+    let lifestyleChangesRecommendation = '';
+
+    if (goalType === 'loss') {
+        workoutRecommendation = generateWorkoutRecommendation(goalType, currentWeight, goalWeight);
+        const nutrition = generateNutritionRecommendation(goalType, currentWeight, goalWeight);
+        nutritionRecommendation = `Protein: ${nutrition.protein}g/day, Fat: ${nutrition.fat}g/day, Carbs: ${nutrition.carbs}g/day, Fiber: ${nutrition.fiber}g/day`;
+        lifestyleChangesRecommendation = generatelifestyleChangesRecommendation(goalType, currentWeight, goalWeight);
+    } else if (goalType === 'gain') {
+        workoutRecommendation = generateWorkoutRecommendation(goalType, currentWeight, goalWeight);
+        const nutrition = generateNutritionRecommendation(goalType, currentWeight, goalWeight);
+        nutritionRecommendation = `Protein: ${nutrition.protein}g/day, Fat: ${nutrition.fat}g/day, Carbs: ${nutrition.carbs}g/day, Fiber: ${nutrition.fiber}g/day`;
+        lifestyleChangesRecommendation = generatelifestyleChangesRecommendation(goalType, currentWeight, goalWeight);
+    } else if (goalType === 'bmi') {
+        if (bmi < 18.5) {
+            workoutRecommendation = "For BMI below 18.5 (Underweight), focus on strength training exercises to build muscle mass. Additionally, ensure a balanced diet with sufficient protein, healthy fats, and carbohydrates to support weight gain.";
+            nutritionRecommendation = "For BMI below 18.5 (Underweight), increase your calorie intake with nutrient-dense foods such as nuts, seeds, lean proteins, whole grains, and healthy fats. Aim for a balanced diet with sufficient protein, carbohydrates, and fats to support weight gain and muscle development.";
+            lifestyleChangesRecommendation = "For BMI below 18.5 (Underweight), prioritize adequate calorie intake and focus on consuming nutrient-dense foods. Additionally, aim for regular strength training exercises to build muscle mass and improve overall health.";
+        } else if (bmi >= 18.5 && bmi < 25) {
+            // Normal weight
+            workoutRecommendation = "For BMI between 18.5 and 24.9 (Normal weight), maintain a balanced exercise routine consisting of both cardiovascular and strength training exercises. Aim for at least 150 minutes of moderate-intensity cardio per week, along with 2-3 days of strength training targeting major muscle groups.";
+            nutritionRecommendation = "For BMI between 18.5 and 24.9 (Normal weight), maintain a balanced diet with a variety of fruits, vegetables, lean proteins, whole grains, and healthy fats. Ensure sufficient hydration and aim for a balanced intake of macronutrients to support overall health and well-being.";
+            lifestyleChangesRecommendation = "For BMI between 18.5 and 24.9 (Normal weight), focus on maintaining a healthy lifestyle with regular exercise, balanced nutrition, and adequate sleep. Prioritize stress management techniques and aim for overall well-being.";
+        } else {
+            // Overweight or obese
+            workoutRecommendation = "For BMI above 24.9 (Overweight or Obese), focus on cardiovascular exercises such as walking, running, or cycling to burn calories and improve heart health. Incorporate strength training exercises to build muscle mass and boost metabolism.";
+            nutritionRecommendation = "For BMI above 24.9 (Overweight or Obese), prioritize a balanced diet with plenty of fruits, vegetables, lean proteins, and whole grains. Limit intake of processed foods, sugary drinks, and high-fat foods. Aim for portion control and mindful eating habits to support weight management.";
+            lifestyleChangesRecommendation = "For BMI above 24.9 (Overweight or Obese), focus on making sustainable lifestyle changes such as increasing physical activity, improving dietary habits, and managing stress levels. Set realistic goals and seek support from healthcare professionals or a registered dietitian if needed.";
+        }
+    }
+
+    // Display recommendations in HTML
+    document.getElementById('recommendationsSection').style.display = 'block';
+    document.getElementById('workoutRecommendations').innerHTML = `<h3>Workout Recommendation:</h3><p>${workoutRecommendation}</p>`;
+    document.getElementById('nutritionRecommendations').innerHTML = `<h3>Nutrition Recommendation:</h3><p>${nutritionRecommendation}</p>`;
+    document.getElementById('lifestyleChanges').innerHTML = `<h3>Lifestyle Changes Recommendation:</h3><p>${lifestyleChangesRecommendation}</p>`;
+}
+
+
+
+    function generatelifestyleChangesRecommendation(goalType, currentWeight, goalWeight) {
+        let workoutRecommendation = '';
+
+        if (goalType === 'loss') {
+            workoutRecommendation = "For weight loss, Prioritize 7-9 hours of quality sleep nightly to regulate hunger hormones. Aim for adequate hydration with 8 glasses (3-4 ltrs) of water daily for overall health and weight management.";
+        } else if (goalType === 'gain') {
+            workoutRecommendation = "For weight gain,Increase calorie intake with nutrient-dense foods like nuts, seeds, lean proteins, whole grains, and healthy fats.Ensure adequate protein intake to support muscle growth.Get sufficient sleep to support muscle recovery and overall health. ";
+        }
+
+        return workoutRecommendation;
+    }
+    function generateWorkoutRecommendation(goalType, currentWeight, goalWeight) {
+        let workoutRecommendation = '';
+
+        if (goalType === 'loss') {
+            workoutRecommendation = "For weight loss, focus on incorporating a combination of cardio exercises such as running, cycling, or HIIT (High-Intensity Interval Training), along with strength training exercises such as weightlifting or bodyweight exercises. Aim for at least 150 minutes of moderate-intensity cardio or 75 minutes of high-intensity cardio per week, coupled with 2-3 days of strength training targeting major muscle groups.";
+        } else if (goalType === 'gain') {
+            workoutRecommendation = "For weight gain, prioritize strength training exercises such as weightlifting, bodyweight exercises, and resistance training. Aim for 3-5 days of strength training per week, focusing on compound exercises that target multiple muscle groups. Gradually increase the weight and intensity of your workouts to stimulate muscle growth.";
+        }
+
+        return workoutRecommendation;
+    }
+
+    function generateNutritionRecommendation(goalType, currentWeight, goalWeight) {
+        const proteinPerKg = 1.2; // Recommended protein intake per kg of body weight
+        const fatPercentage = goalType === 'loss' ? 0.25 : 0.3; // Percentage of daily calories from fat
+        const carbPercentage = 1 - fatPercentage - (proteinPerKg * currentWeight / 1000 * 4) / (goalWeight * 4); // Remaining calories from carbs
+
+
+        const proteinIntake = Math.round(proteinPerKg * goalWeight);
+        const fatIntake = Math.round(fatPercentage * (goalWeight * 9));
+        const carbIntake = Math.round(carbPercentage * (goalWeight * 4));
+        const fiberIntake = Math.round(goalWeight * .5);
+
+        return {
+            protein: proteinIntake,
+            fat: fatIntake,
+            carbs: carbIntake,
+            fiber:fiberIntake
+        };
+    }
+
+</script>
+</body>
+</html>
+
+
+<!-- part2 -->
+
